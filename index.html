@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renterra — Buy or Rent Anything</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+/* ================= BASE / TOKENS ================= */
+
+:root{
+  --navy:#1b2440;
+  --gold:#c9973f;
+  --gold-deep:#a97a1f;
+  --line:#e4e2da;
+  --text-soft:#6b7280;
+  --surface:#f7f5f0;
+  --bg:#fffdf9;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Inter, sans-serif;
+  color:var(--navy);
+  background:var(--bg);
+  line-height:1.5;
+}
+
+.container{
+  max-width:1200px;
+  margin:0 auto;
+  padding:0 24px;
+}
+
+h1,h2,h3{
+  font-family:Fraunces, serif;
+  color:var(--navy);
+}
+
+.eyebrow{
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--gold-deep);
+}
+
+a{
+  color:inherit;
+}
+
+/* ================= NAV ================= */
+
+header.site-nav{
+  position:sticky;
+  top:0;
+  background:var(--bg);
+  border-bottom:1px solid var(--line);
+  z-index:50;
+}
+
+.nav-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 0;
+}
+
+.logo{
+  font-family:Fraunces, serif;
+  font-weight:700;
+  font-size:22px;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:28px;
+  list-style:none;
+  font-size:14.5px;
+  font-weight:500;
+}
+
+.nav-links a{
+  text-decoration:none;
+  cursor:pointer;
+}
+
+.nav-links a:hover{
+  color:var(--gold-deep);
+}
+
+.nav-cta{
+  background:var(--navy);
+  color:white;
+  padding:10px 18px;
+  border-radius:8px;
+  font-weight:600;
+}
+
+.nav-cta:hover{
+  color:white;
+  opacity:.9;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+  padding:80px 0 60px;
+  border-bottom:1px solid var(--line);
+}
+
+.hero h1{
+  font-size:46px;
+  max-width:640px;
+  line-height:1.15;
+}
+
+.hero p{
+  margin-top:16px;
+  max-width:520px;
+  color:var(--text-soft);
+  font-size:16px;
+}
+
+/* ================= CATEGORY GRID (home) ================= */
+
+.categories-section{
+  padding:70px 0;
+}
+
+.sec-head{
+  margin-bottom:34px;
+}
+
+.sec-head h2{
+  font-size:32px;
+  margin-top:10px;
+}
+
+.sec-head p{
+  color:var(--text-soft);
+  margin-top:8px;
+}
+
+.category-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.cat-card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:28px 24px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.cat-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 15px 30px rgba(18,23,43,.1);
+}
+
+.cc-icon{
+  font-size:28px;
+}
+
+.cc-name{
+  font-family:Fraunces, serif;
+  font-weight:700;
+  font-size:18px;
+  margin-top:14px;
+}
+
+.cc-count{
+  font-size:13px;
+  color:var(--text-soft);
+  margin-top:6px;
+}
+
+/* ================= CATEGORY MARKETPLACE ================= */
+
+.category-page{
+  display:none;
+  padding:70px 0 100px;
+}
+
+.category-page.active{
+  display:block;
+}
+
+.category-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:20px;
+  margin-bottom:30px;
+  flex-wrap:wrap;
+}
+
+.category-top h2{
+  font-size:38px;
+  margin-top:12px;
+}
+
+.category-top p{
+  color:var(--text-soft);
+  margin-top:8px;
+}
+
+.category-tools{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:30px;
+}
+
+.category-tools input,
+.category-tools select{
+  padding:13px 16px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:white;
+  font-family:Inter;
+  outline:none;
+}
+
+.category-tools input{
+  width:280px;
+}
+
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:22px;
+}
+
+.product-card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  transition:.2s;
+}
+
+.product-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 15px 30px rgba(18,23,43,.12);
+}
+
+.product-image{
+  height:180px;
+  background:#eef2f6;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.product-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.product-fav{
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  border:0;
+  background:white;
+  cursor:pointer;
+  font-size:17px;
+}
+
+.product-info{
+  padding:18px;
+}
+
+.product-category{
+  color:var(--gold-deep);
+  font-size:11px;
+  font-weight:700;
+  text-transform:uppercase;
+}
+
+.product-name{
+  font-family:Fraunces;
+  font-size:19px;
+  font-weight:700;
+  color:var(--navy);
+  margin-top:7px;
+}
+
+.product-location{
+  font-size:12.5px;
+  color:var(--text-soft);
+  margin-top:6px;
+}
+
+.product-rating{
+  margin-top:9px;
+  font-size:13px;
+}
+
+.price-box{
+  border-top:1px solid var(--line);
+  margin-top:15px;
+  padding-top:14px;
+}
+
+.buy-price{
+  font-family:Fraunces;
+  font-size:18px;
+  font-weight:700;
+  color:var(--navy);
+}
+
+.rent-price{
+  font-size:13px;
+  color:var(--text-soft);
+  margin-top:4px;
+}
+
+.product-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:14px;
+}
+
+.product-actions button{
+  padding:10px 6px;
+  border-radius:8px;
+  border:1px solid var(--line);
+  cursor:pointer;
+  font-weight:600;
+}
+
+.buy-btn{
+  background:var(--navy);
+  color:white;
+}
+
+.rent-btn{
+  background:var(--gold);
+  color:white;
+}
+
+.back-category{
+  border:0;
+  background:transparent;
+  color:var(--navy);
+  font-weight:600;
+  cursor:pointer;
+  margin-bottom:20px;
+}
+
+/* ================= ORDERS DASHBOARD ================= */
+
+.orders-section{
+  padding:80px 0;
+  border-top:1px solid var(--line);
+}
+
+.order-summary{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:16px;
+  margin:30px 0;
+}
+
+.summary-card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:20px;
+}
+
+.summary-card span{
+  font-size:12px;
+  color:var(--text-soft);
+}
+
+.summary-card strong{
+  display:block;
+  font-family:Fraunces;
+  font-size:27px;
+  color:var(--navy);
+  margin-top:7px;
+}
+
+.orders-table-wrap{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:auto;
+}
+
+.orders-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:850px;
+}
+
+.orders-table th,
+.orders-table td{
+  padding:15px 18px;
+  text-align:left;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+}
+
+.orders-table th{
+  background:var(--surface);
+  color:var(--navy);
+}
+
+.status{
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+}
+
+.status.completed{
+  background:#dff1e9;
+  color:#17664d;
+}
+
+.status.renting{
+  background:#f8eacb;
+  color:#856519;
+}
+
+.status.pending{
+  background:#e7eaf4;
+  color:#34405d;
+}
+
+.orders-tools{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin:20px 0 18px;
+}
+
+.orders-tools input,
+.orders-tools select{
+  padding:12px 15px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  background:white;
+  font-family:Inter;
+  font-size:13.5px;
+  outline:none;
+}
+
+.orders-tools input{
+  width:260px;
+}
+
+.orders-empty-row td{
+  text-align:center;
+  padding:50px 18px;
+  color:var(--text-soft);
+}
+
+/* ================= SELLER DASHBOARD ================= */
+
+.seller-page{
+  display:none;
+  padding:70px 0 100px;
+  border-top:1px solid var(--line);
+}
+
+.seller-page.active{
+  display:block;
+}
+
+.seller-top{
+  margin-bottom:34px;
+}
+
+.seller-layout{
+  display:grid;
+  grid-template-columns:380px 1fr;
+  gap:26px;
+  align-items:start;
+}
+
+.seller-form{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:24px;
+  position:sticky;
+  top:90px;
+}
+
+.seller-form h3{
+  font-size:19px;
+  margin-bottom:16px;
+}
+
+.form-row{
+  margin-bottom:14px;
+}
+
+.form-row label{
+  display:block;
+  font-size:12.5px;
+  font-weight:600;
+  color:var(--text-soft);
+  margin-bottom:6px;
+}
+
+.form-row input,
+.form-row select{
+  width:100%;
+  padding:11px 13px;
+  border:1px solid var(--line);
+  border-radius:8px;
+  font-family:Inter;
+  font-size:14px;
+  outline:none;
+}
+
+.form-row.split{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.seller-submit{
+  width:100%;
+  padding:13px;
+  border:0;
+  border-radius:8px;
+  background:var(--navy);
+  color:white;
+  font-weight:600;
+  cursor:pointer;
+  margin-top:6px;
+}
+
+.seller-submit:hover{
+  opacity:.92;
+}
+
+.seller-listings h3{
+  font-size:19px;
+  margin-bottom:16px;
+}
+
+.seller-stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-bottom:22px;
+}
+
+.seller-stats .summary-card strong{
+  font-size:22px;
+}
+
+.listing-row{
+  display:grid;
+  grid-template-columns:70px 1fr auto auto;
+  align-items:center;
+  gap:16px;
+  background:white;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px 16px;
+  margin-bottom:10px;
+}
+
+.listing-thumb{
+  width:70px;
+  height:56px;
+  border-radius:8px;
+  object-fit:cover;
+  background:#eef2f6;
+}
+
+.listing-name{
+  font-weight:600;
+  font-size:14.5px;
+}
+
+.listing-meta{
+  font-size:12px;
+  color:var(--text-soft);
+  margin-top:3px;
+}
+
+.listing-price{
+  font-size:13.5px;
+  text-align:right;
+  white-space:nowrap;
+}
+
+.listing-remove{
+  border:1px solid var(--line);
+  background:transparent;
+  color:#b03a3a;
+  border-radius:8px;
+  padding:8px 12px;
+  cursor:pointer;
+  font-size:12.5px;
+  font-weight:600;
+}
+
+.listing-empty{
+  background:white;
+  border:1px dashed var(--line);
+  border-radius:12px;
+  padding:50px;
+  text-align:center;
+  color:var(--text-soft);
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+  border-top:1px solid var(--line);
+  padding:30px 0;
+  font-size:13px;
+  color:var(--text-soft);
+  text-align:center;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1000px){
+  .category-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .product-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .order-summary{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .hero h1{
+    font-size:36px;
+  }
+}
+
+@media(max-width:600px){
+  .nav-links{
+    display:none;
+  }
+
+  .category-grid{
+    grid-template-columns:1fr;
+  }
+
+  .product-grid{
+    grid-template-columns:1fr;
+  }
+
+  .order-summary{
+    grid-template-columns:1fr;
+  }
+
+  .category-tools input{
+    width:100%;
+  }
+
+  .seller-layout{
+    grid-template-columns:1fr;
+  }
+
+  .seller-form{
+    position:static;
+  }
+
+  .seller-stats{
+    grid-template-columns:1fr;
+  }
+
+  .listing-row{
+    grid-template-columns:56px 1fr;
+    row-gap:8px;
+  }
+
+  .listing-price,
+  .listing-remove{
+    grid-column:2;
+  }
+
+  .orders-tools input{
+    width:100%;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="container nav-inner">
+    <div class="logo">Renterra</div>
+    <ul class="nav-links">
+      <li><a onclick="document.getElementById('categories').scrollIntoView({behavior:'smooth'})">Categories</a></li>
+      <li><a onclick="document.getElementById('orders').scrollIntoView({behavior:'smooth'})">Orders</a></li>
+      <li><a class="nav-cta" onclick="openSellerDashboard()">Sell an item</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">Buy or rent, your call</span>
+      <h1>Everything you need, without needing to own it.</h1>
+      <p>Browse vehicles, cameras, furniture, event gear and tools from verified sellers across Bangladesh — buy outright or rent by the day.</p>
+    </div>
+  </section>
+
+  <section id="categories" class="categories-section">
+    <div class="container">
+
+      <div class="sec-head">
+        <span class="eyebrow">Marketplace</span>
+        <h2>Browse by category</h2>
+        <p>Pick a category to see what's available to buy or rent right now.</p>
+      </div>
+
+      <div class="category-grid">
+
+        <div class="cat-card" onclick="openCategory('camera')">
+          <div class="cc-icon">📷</div>
+          <div class="cc-name">Camera & AV</div>
+          <div class="cc-count">340 listings</div>
+        </div>
+
+        <div class="cat-card" onclick="openCategory('furniture')">
+          <div class="cc-icon">🛋️</div>
+          <div class="cc-name">Furniture & Appliances</div>
+          <div class="cc-count">610 listings</div>
+        </div>
+
+        <div class="cat-card" onclick="openCategory('event')">
+          <div class="cc-icon">🎉</div>
+          <div class="cc-name">Event & Party Gear</div>
+          <div class="cc-count">495 listings</div>
+        </div>
+
+        <div class="cat-card" onclick="openCategory('vehicles')">
+          <div class="cc-icon">🚗</div>
+          <div class="cc-name">Vehicles & Transport</div>
+          <div class="cc-count">180 listings</div>
+        </div>
+
+        <div class="cat-card" onclick="openCategory('tools')">
+          <div class="cc-icon">🛠️</div>
+          <div class="cc-name">Tools & Equipment</div>
+          <div class="cc-count">720 listings</div>
+        </div>
+
+        <div class="cat-card" onclick="openCategory('outdoor')">
+          <div class="cc-icon">⛺</div>
+          <div class="cc-name">Outdoor & Camping</div>
+          <div class="cc-count">265 listings</div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= CATEGORY PRODUCT PAGE ================= -->
+
+  <section id="categoryPage" class="category-page">
+    <div class="container">
+
+      <button class="back-category" onclick="closeCategory()">
+        ← Back to Categories
+      </button>
+
+      <div class="category-top">
+        <div>
+          <span class="eyebrow">Browse category</span>
+          <h2 id="categoryTitle">Vehicles & Transport</h2>
+          <p id="categoryDescription">
+            Find vehicles available for buying or renting.
+          </p>
+        </div>
+
+        <div>
+          <strong id="productCount">0</strong> products found
+        </div>
+      </div>
+
+      <div class="category-tools">
+
+        <input
+          type="text"
+          id="productSearch"
+          placeholder="Search products..."
+          oninput="filterProducts()"
+        >
+
+        <select id="typeFilter" onchange="filterProducts()">
+          <option value="all">Buy + Rent</option>
+          <option value="buy">Buy</option>
+          <option value="rent">Rent</option>
+        </select>
+
+        <select id="sortProducts" onchange="filterProducts()">
+          <option value="popular">Most Popular</option>
+          <option value="low">Price: Low to High</option>
+          <option value="high">Price: High to Low</option>
+        </select>
+
+      </div>
+
+      <div id="productGrid" class="product-grid"></div>
+
+    </div>
+  </section>
+
+  <!-- ================= ORDERS ================= -->
+
+  <section id="orders" class="orders-section">
+    <div class="container">
+
+      <div class="sec-head">
+        <span class="eyebrow">Order Management</span>
+        <h2>Orders & Revenue</h2>
+        <p>Track all buying and rental orders from customers.</p>
+      </div>
+
+      <div class="order-summary">
+
+        <div class="summary-card">
+          <span>Total Orders</span>
+          <strong id="totalOrders">0</strong>
+        </div>
+
+        <div class="summary-card">
+          <span>Buy Orders</span>
+          <strong id="buyOrders">0</strong>
+        </div>
+
+        <div class="summary-card">
+          <span>Rent Orders</span>
+          <strong id="rentOrders">0</strong>
+        </div>
+
+        <div class="summary-card">
+          <span>Total Customers</span>
+          <strong id="totalCustomers">0</strong>
+        </div>
+
+        <div class="summary-card">
+          <span>Total Revenue</span>
+          <strong id="totalRevenue">৳0</strong>
+        </div>
+
+      </div>
+
+      <div class="orders-tools">
+
+        <input
+          type="text"
+          id="orderSearch"
+          placeholder="Search by customer name..."
+          oninput="filterOrders()"
+        >
+
+        <select id="orderStatusFilter" onchange="filterOrders()">
+          <option value="all">All statuses</option>
+          <option value="completed">Completed</option>
+          <option value="renting">Renting</option>
+          <option value="pending">Pending</option>
+        </select>
+
+      </div>
+
+      <div class="orders-table-wrap">
+
+        <table class="orders-table">
+
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Product</th>
+              <th>Type</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+
+          <tbody id="ordersTable"></tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SELLER DASHBOARD ================= -->
+
+  <section id="sellerPage" class="seller-page">
+    <div class="container">
+
+      <button class="back-category" onclick="closeSellerDashboard()">
+        ← Back to Categories
+      </button>
+
+      <div class="seller-top">
+        <span class="eyebrow">Seller Dashboard</span>
+        <h2>List an item to buy or rent</h2>
+        <p style="color:var(--text-soft);margin-top:8px;">
+          Add your own listing below — it appears instantly under its category and here in your dashboard.
+        </p>
+      </div>
+
+      <div class="seller-layout">
+
+        <form class="seller-form" onsubmit="submitListing(event)">
+
+          <h3>New listing</h3>
+
+          <div class="form-row">
+            <label for="sellName">Item name</label>
+            <input type="text" id="sellName" placeholder="e.g. Canon EOS R6" required>
+          </div>
+
+          <div class="form-row">
+            <label for="sellCategory">Category</label>
+            <select id="sellCategory" required>
+              <option value="vehicles">Vehicles & Transport</option>
+              <option value="camera">Camera & AV</option>
+              <option value="furniture">Furniture & Appliances</option>
+              <option value="event">Event & Party Gear</option>
+              <option value="tools">Tools & Equipment</option>
+              <option value="outdoor">Outdoor & Camping</option>
+            </select>
+          </div>
+
+          <div class="form-row split">
+            <div>
+              <label for="sellBuy">Buy price (৳)</label>
+              <input type="number" id="sellBuy" min="0" placeholder="0" required>
+            </div>
+            <div>
+              <label for="sellRent">Rent price / day (৳)</label>
+              <input type="number" id="sellRent" min="0" placeholder="0" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label for="sellLocation">Location</label>
+            <input type="text" id="sellLocation" placeholder="e.g. Dhaka" required>
+          </div>
+
+          <div class="form-row">
+            <label for="sellImage">Image URL</label>
+            <input type="text" id="sellImage" placeholder="https://...">
+          </div>
+
+          <button type="submit" class="seller-submit">Publish listing</button>
+
+        </form>
+
+        <div class="seller-listings">
+
+          <h3>My listings</h3>
+
+          <div class="seller-stats">
+
+            <div class="summary-card">
+              <span>Active Listings</span>
+              <strong id="sellerListingCount">0</strong>
+            </div>
+
+            <div class="summary-card">
+              <span>Combined Buy Value</span>
+              <strong id="sellerBuyValue">৳0</strong>
+            </div>
+
+            <div class="summary-card">
+              <span>Combined Rent Value</span>
+              <strong id="sellerRentValue">৳0</strong>
+            </div>
+
+          </div>
+
+          <div id="sellerListingsList"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container">
+    &copy; 2026 Renterra. Buy or rent — your call.
+  </div>
+</footer>
+
+<script>
+
+/* =====================================================
+   RENTERRA PRODUCT DATABASE
+===================================================== */
+
+const products = [
+
+  /* ================= VEHICLES ================= */
+
+  {
+    id: 101,
+    category: "vehicles",
+    name: "Toyota Axio 2018",
+    image: "https://images.unsplash.com/photo-1549924231-f129b911e442?auto=format&fit=crop&w=800&q=80",
+    buy: 1850000,
+    rent: 3000,
+    location: "Dhaka",
+    rating: 4.6,
+    reviews: 120
+  },
+
+  {
+    id: 102,
+    category: "vehicles",
+    name: "Toyota Premio 2019",
+    image: "https://images.unsplash.com/photo-1550355291-bbee04a92027?auto=format&fit=crop&w=800&q=80",
+    buy: 2400000,
+    rent: 3500,
+    location: "Dhaka",
+    rating: 4.7,
+    reviews: 87
+  },
+
+  {
+    id: 103,
+    category: "vehicles",
+    name: "Honda Vezel 2020",
+    image: "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=800&q=80",
+    buy: 2750000,
+    rent: 4000,
+    location: "Dhaka",
+    rating: 4.8,
+    reviews: 110
+  },
+
+  {
+    id: 104,
+    category: "vehicles",
+    name: "Toyota Allion 2018",
+    image: "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&w=800&q=80",
+    buy: 2100000,
+    rent: 3200,
+    location: "Chattogram",
+    rating: 4.7,
+    reviews: 95
+  },
+
+  {
+    id: 105,
+    category: "vehicles",
+    name: "Toyota Noah 2020",
+    image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800&q=80",
+    buy: 3800000,
+    rent: 5500,
+    location: "Dhaka",
+    rating: 4.7,
+    reviews: 76
+  },
+
+  {
+    id: 106,
+    category: "vehicles",
+    name: "Toyota Harrier 2021",
+    image: "https://images.unsplash.com/photo-1511919884226-fd3cad34687c?auto=format&fit=crop&w=800&q=80",
+    buy: 5200000,
+    rent: 7000,
+    location: "Dhaka",
+    rating: 4.8,
+    reviews: 84
+  },
+
+  {
+    id: 107,
+    category: "vehicles",
+    name: "BMW 3 Series 2020",
+    image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=800&q=80",
+    buy: 6500000,
+    rent: 9000,
+    location: "Dhaka",
+    rating: 4.9,
+    reviews: 63
+  },
+
+  {
+    id: 108,
+    category: "vehicles",
+    name: "Mercedes C-Class 2021",
+    image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=800&q=80",
+    buy: 7800000,
+    rent: 10000,
+    location: "Dhaka",
+    rating: 4.9,
+    reviews: 51
+  },
+
+  {
+    id: 109,
+    category: "vehicles",
+    name: "Toyota Prado 2020",
+    image: "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?auto=format&fit=crop&w=800&q=80",
+    buy: 9500000,
+    rent: 12000,
+    location: "Dhaka",
+    rating: 4.9,
+    reviews: 44
+  },
+
+  {
+    id: 110,
+    category: "vehicles",
+    name: "Toyota Hiace 2021",
+    image: "https://images.unsplash.com/photo-1609521263047-f8f205293f24?auto=format&fit=crop&w=800&q=80",
+    buy: 4800000,
+    rent: 6500,
+    location: "Gazipur",
+    rating: 4.6,
+    reviews: 70
+  },
+
+
+  /* ================= CAMERA ================= */
+
+  {
+    id: 201,
+    category: "camera",
+    name: "Canon EOS R6",
+    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80",
+    buy: 185000,
+    rent: 3500,
+    location: "Dhaka",
+    rating: 4.9,
+    reviews: 150
+  },
+
+  {
+    id: 202,
+    category: "camera",
+    name: "Sony A7 III",
+    image: "https://images.unsplash.com/photo-1606980707986-1c7b6b4f4b7c?auto=format&fit=crop&w=800&q=80",
+    buy: 210000,
+    rent: 4000,
+    location: "Dhaka",
+    rating: 4.8,
+    reviews: 120
+  },
+
+  {
+    id: 203,
+    category: "camera",
+    name: "Nikon Z6 II",
+    image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?auto=format&fit=crop&w=800&q=80",
+    buy: 225000,
+    rent: 4200,
+    location: "Chattogram",
+    rating: 4.7,
+    reviews: 90
+  },
+
+  {
+    id: 204,
+    category: "camera",
+    name: "Sony FX3 Cinema Camera",
+    image: "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80",
+    buy: 550000,
+    rent: 8500,
+    location: "Dhaka",
+    rating: 4.9,
+    reviews: 72
+  },
+
+
+  /* ================= FURNITURE ================= */
+
+  {
+    id: 301,
+    category: "furniture",
+    name: "Modern Sofa Set",
+    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80",
+    buy: 85000,
+    rent: 2500,
+    location: "Dhaka",
+    rating: 4.7,
+    reviews: 65
+  },
+
+  {
+    id: 302,
+    category: "furniture",
+    name: "6 Seat Dining Table",
+    image: "https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&w=800&q=80",
+    buy: 55000,
+    rent: 1800,
+    location: "Dhaka",
+    rating: 4.6,
+    reviews: 42
+  },
+
+  {
+    id: 303,
+    category: "furniture",
+    name: "King Size Bed",
+    image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80",
+    buy: 75000,
+    rent: 2200,
+    location: "Gazipur",
+    rating: 4.8,
+    reviews: 51
+  },
+
+
+  /* ================= EVENT ================= */
+
+  {
+    id: 401,
+    category: "event",
+    name: "LED Stage Lighting",
+    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80",
+    buy: 95000,
+    rent: 4500,
+    location: "Dhaka",
+    rating: 4.8,
+    reviews: 88
+  },
+
+  {
+    id: 402,
+    category: "event",
+    name: "Professional Sound System",
+    image: "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?auto=format&fit=crop&w=800&q=80",
+    buy: 120000,
+    rent: 5500,
+    location: "Dhaka",
+    rating: 4.9,
+    reviews: 105
+  },
+
+
+  /* ================= TOOLS ================= */
+
+  {
+    id: 501,
+    category: "tools",
+    name: "Cordless Drill Combo Kit",
+    image: "https://images.unsplash.com/photo-1504148455328-c376907d081c?auto=format&fit=crop&w=800&q=80",
+    buy: 9500,
+    rent: 500,
+    location: "Dhaka",
+    rating: 4.7,
+    reviews: 60
+  },
+
+  {
+    id: 502,
+    category: "tools",
+    name: "Power Generator",
+    image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=800&q=80",
+    buy: 85000,
+    rent: 2500,
+    location: "Dhaka",
+    rating: 4.6,
+    reviews: 44
+  },
+
+
+  /* ================= OUTDOOR ================= */
+
+  {
+    id: 601,
+    category: "outdoor",
+    name: "Camping Tent 4 Person",
+    image: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=800&q=80",
+    buy: 8500,
+    rent: 700,
+    location: "Sylhet",
+    rating: 4.8,
+    reviews: 72
+  },
+
+  {
+    id: 602,
+    category: "outdoor",
+    name: "Mountain Camping Set",
+    image: "https://images.unsplash.com/photo-1478827536114-da961b7d1e2a?auto=format&fit=crop&w=800&q=80",
+    buy: 15000,
+    rent: 1200,
+    location: "Chattogram",
+    rating: 4.7,
+    reviews: 48
+  }
+
+];
+
+/* =====================================================
+   ORDERS DATABASE
+===================================================== */
+
+let orderIdCounter = 1007;
+
+const orders = [
+  {
+    id: 1001,
+    customer: "Rafiq Islam",
+    product: "Toyota Premio 2019",
+    type: "buy",
+    date: "2026-08-14",
+    amount: 2400000,
+    status: "Completed"
+  },
+  {
+    id: 1002,
+    customer: "Nusrat Jahan",
+    product: "Canon EOS R6",
+    type: "rent",
+    date: "2026-08-20",
+    amount: 3500,
+    status: "Renting"
+  },
+  {
+    id: 1003,
+    customer: "Tanvir Ahmed",
+    product: "Modern Sofa Set",
+    type: "buy",
+    date: "2026-08-22",
+    amount: 85000,
+    status: "Completed"
+  },
+  {
+    id: 1004,
+    customer: "Farzana Karim",
+    product: "Professional Sound System",
+    type: "rent",
+    date: "2026-08-30",
+    amount: 5500,
+    status: "Renting"
+  },
+  {
+    id: 1005,
+    customer: "Shahriar Kabir",
+    product: "Toyota Hiace 2021",
+    type: "rent",
+    date: "2026-09-02",
+    amount: 6500,
+    status: "Pending"
+  },
+  {
+    id: 1006,
+    customer: "Mim Akter",
+    product: "Cordless Drill Combo Kit",
+    type: "buy",
+    date: "2026-09-05",
+    amount: 9500,
+    status: "Completed"
+  },
+  {
+    id: 1007,
+    customer: "Imran Hossain",
+    product: "Camping Tent 4 Person",
+    type: "rent",
+    date: "2026-09-08",
+    amount: 700,
+    status: "Pending"
+  }
+];
+
+/* =====================================================
+   CATEGORY SYSTEM
+===================================================== */
+
+let currentCategory = "vehicles";
+
+const categoryNames = {
+  camera: "Camera & AV",
+  furniture: "Furniture & Appliances",
+  event: "Event & Party Gear",
+  vehicles: "Vehicles & Transport",
+  tools: "Tools & Equipment",
+  outdoor: "Outdoor & Camping"
+};
+
+function openCategory(category){
+
+  currentCategory = category;
+
+  document
+    .querySelectorAll("main > section")
+    .forEach(section => {
+      section.style.display = "none";
+    });
+
+  const categoryPage = document.getElementById("categoryPage");
+
+  categoryPage.style.display = "block";
+
+  document.getElementById("categoryTitle").textContent =
+    categoryNames[category];
+
+  document.getElementById("categoryDescription").textContent =
+    `Browse different ${categoryNames[category].toLowerCase()} available for buying or renting.`;
+
+  document.getElementById("productSearch").value = "";
+  document.getElementById("typeFilter").value = "all";
+  document.getElementById("sortProducts").value = "popular";
+
+  renderProducts();
+
+  categoryPage.scrollIntoView({
+    behavior: "smooth"
+  });
+}
+
+
+function closeCategory(){
+
+  document
+    .querySelectorAll("main > section")
+    .forEach(section => {
+      section.style.display = "";
+    });
+
+  document.getElementById("categoryPage").style.display = "none";
+
+  document.getElementById("categories")
+    .scrollIntoView({
+      behavior: "smooth"
+    });
+}
+
+/* =====================================================
+   SELLER DASHBOARD
+===================================================== */
+
+let sellerIdCounter = 900;
+
+function openSellerDashboard(){
+
+  document
+    .querySelectorAll("main > section")
+    .forEach(section => {
+      section.style.display = "none";
+    });
+
+  const sellerPage = document.getElementById("sellerPage");
+
+  sellerPage.style.display = "block";
+
+  renderSellerListings();
+
+  sellerPage.scrollIntoView({
+    behavior: "smooth"
+  });
+
+}
+
+
+function closeSellerDashboard(){
+
+  document
+    .querySelectorAll("main > section")
+    .forEach(section => {
+      section.style.display = "";
+    });
+
+  document.getElementById("sellerPage").style.display = "none";
+
+  document.getElementById("categories")
+    .scrollIntoView({
+      behavior: "smooth"
+    });
+
+}
+
+
+function submitListing(event){
+
+  event.preventDefault();
+
+  const name = document.getElementById("sellName").value.trim();
+  const category = document.getElementById("sellCategory").value;
+  const buy = Number(document.getElementById("sellBuy").value) || 0;
+  const rent = Number(document.getElementById("sellRent").value) || 0;
+  const location = document.getElementById("sellLocation").value.trim();
+  const image = document.getElementById("sellImage").value.trim()
+    || "https://images.unsplash.com/photo-1495707902641-75cac588d2e9?auto=format&fit=crop&w=800&q=80";
+
+  if(!name || !location){
+    return;
+  }
+
+  sellerIdCounter += 1;
+
+  const newProduct = {
+    id: sellerIdCounter,
+    category: category,
+    name: name,
+    image: image,
+    buy: buy,
+    rent: rent,
+    location: location,
+    rating: 5.0,
+    reviews: 0,
+    seller: true
+  };
+
+  products.push(newProduct);
+
+  renderSellerListings();
+
+  event.target.reset();
+
+  alert(`"${name}" has been listed under ${categoryNames[category]}.`);
+
+}
+
+
+function removeListing(productId){
+
+  const index = products.findIndex(p => p.id === productId);
+
+  if(index !== -1){
+    products.splice(index, 1);
+  }
+
+  renderSellerListings();
+
+}
+
+
+function renderSellerListings(){
+
+  const mine = products.filter(p => p.seller);
+
+  document.getElementById("sellerListingCount").textContent = mine.length;
+
+  const buyTotal = mine.reduce((sum, p) => sum + p.buy, 0);
+  const rentTotal = mine.reduce((sum, p) => sum + p.rent, 0);
+
+  document.getElementById("sellerBuyValue").textContent =
+    "৳" + buyTotal.toLocaleString();
+
+  document.getElementById("sellerRentValue").textContent =
+    "৳" + rentTotal.toLocaleString();
+
+  const list = document.getElementById("sellerListingsList");
+
+  if(mine.length === 0){
+
+    list.innerHTML = `
+      <div class="listing-empty">
+        <h3>No listings yet</h3>
+        <p>Use the form to publish your first item.</p>
+      </div>
+    `;
+
+    return;
+
+  }
+
+  list.innerHTML = mine.map(product => `
+
+    <div class="listing-row">
+
+      <img class="listing-thumb" src="${product.image}" alt="${product.name}">
+
+      <div>
+        <div class="listing-name">${product.name}</div>
+        <div class="listing-meta">
+          ${categoryNames[product.category]} · 📍 ${product.location}
+        </div>
+      </div>
+
+      <div class="listing-price">
+        Buy ৳${product.buy.toLocaleString()}<br>
+        Rent ৳${product.rent.toLocaleString()}/day
+      </div>
+
+      <button class="listing-remove" onclick="removeListing(${product.id})">
+        Remove
+      </button>
+
+    </div>
+
+  `).join("");
+
+}
+
+/* =====================================================
+   PRODUCT RENDERING
+===================================================== */
+
+function renderProducts(){
+
+  let list = products.filter(
+    p => p.category === currentCategory
+  );
+
+  const search =
+    document.getElementById("productSearch")
+      .value
+      .toLowerCase();
+
+  const type =
+    document.getElementById("typeFilter").value;
+
+  const sort =
+    document.getElementById("sortProducts").value;
+
+
+  /* SEARCH */
+
+  if(search){
+
+    list = list.filter(product =>
+      product.name.toLowerCase().includes(search)
+    );
+
+  }
+
+
+  /* TYPE */
+
+  if(type === "buy"){
+
+    list = list.filter(product =>
+      product.buy > 0
+    );
+
+  }
+
+  if(type === "rent"){
+
+    list = list.filter(product =>
+      product.rent > 0
+    );
+
+  }
+
+
+  /* SORT */
+
+  if(sort === "low"){
+
+    list.sort((a,b) => a.buy - b.buy);
+
+  }
+
+  if(sort === "high"){
+
+    list.sort((a,b) => b.buy - a.buy);
+
+  }
+
+  if(sort === "popular"){
+
+    list.sort((a,b) => b.reviews - a.reviews);
+
+  }
+
+
+  document.getElementById("productCount")
+    .textContent = list.length;
+
+
+  const grid =
+    document.getElementById("productGrid");
+
+
+  if(list.length === 0){
+
+    grid.innerHTML = `
+      <div style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:70px;
+        color:var(--text-soft);
+      ">
+        <h3>No products found</h3>
+        <p>Try another search or filter.</p>
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML = list.map(product => `
+
+    <div class="product-card">
+
+      <div class="product-image">
+
+        <img
+          src="${product.image}"
+          alt="${product.name}"
+        >
+
+        <button
+          class="product-fav"
+          onclick="toggleFavorite(this)"
+        >
+          ♡
+        </button>
+
+      </div>
+
+
+      <div class="product-info">
+
+        <div class="product-category">
+          ${categoryNames[product.category]}
+        </div>
+
+        <div class="product-name">
+          ${product.name}
+        </div>
+
+        <div class="product-location">
+          📍 ${product.location}
+        </div>
+
+        <div class="product-rating">
+          ⭐ ${product.rating}
+          <span style="color:#777;">
+            (${product.reviews} reviews)
+          </span>
+        </div>
+
+
+        <div class="price-box">
+
+          <div class="buy-price">
+            Buy: ৳${product.buy.toLocaleString()}
+          </div>
+
+          <div class="rent-price">
+            Rent: ৳${product.rent.toLocaleString()} / day
+          </div>
+
+        </div>
+
+
+        <div class="product-actions">
+
+          <button
+            class="buy-btn"
+            onclick="placeOrder(${product.id}, 'buy')"
+          >
+            Buy Now
+          </button>
+
+          <button
+            class="rent-btn"
+            onclick="placeOrder(${product.id}, 'rent')"
+          >
+            Rent Now
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  `).join("");
+
+}
+
+
+function filterProducts(){
+
+  renderProducts();
+
+}
+
+
+function toggleFavorite(button){
+
+  button.textContent =
+    button.textContent === "♡"
+      ? "♥"
+      : "♡";
+
+}
+
+/* =====================================================
+   ORDER PLACEMENT
+===================================================== */
+
+function placeOrder(productId, type){
+
+  const product =
+    products.find(p => p.id === productId);
+
+  if(!product) return;
+
+  orderIdCounter += 1;
+
+  const amount =
+    type === "buy" ? product.buy : product.rent;
+
+  orders.unshift({
+    id: orderIdCounter,
+    customer: "You",
+    product: product.name,
+    type: type,
+    date: new Date().toISOString().slice(0,10),
+    amount: amount,
+    status: type === "buy" ? "Completed" : "Renting"
+  });
+
+  renderOrders();
+
+  alert(
+    `${type === "buy" ? "Purchase" : "Rental"} confirmed for ${product.name}.`
+  );
+
+  document.getElementById("orders")
+    .scrollIntoView({ behavior: "smooth" });
+
+}
+
+/* =====================================================
+   ORDERS RENDERING
+===================================================== */
+
+function filterOrders(){
+
+  renderOrders();
+
+}
+
+
+function renderOrders(){
+
+  const table =
+    document.getElementById("ordersTable");
+
+  const search =
+    document.getElementById("orderSearch")
+      ? document.getElementById("orderSearch").value.toLowerCase()
+      : "";
+
+  const statusFilter =
+    document.getElementById("orderStatusFilter")
+      ? document.getElementById("orderStatusFilter").value
+      : "all";
+
+  let list = orders;
+
+  if(search){
+    list = list.filter(order =>
+      order.customer.toLowerCase().includes(search)
+    );
+  }
+
+  if(statusFilter !== "all"){
+    list = list.filter(order =>
+      order.status.toLowerCase() === statusFilter
+    );
+  }
+
+  if(list.length === 0){
+
+    table.innerHTML = `
+      <tr class="orders-empty-row">
+        <td colspan="7">
+          <h3>No matching orders</h3>
+          <p>Try a different name or status.</p>
+        </td>
+      </tr>
+    `;
+
+    updateOrderSummary();
+
+    return;
+
+  }
+
+
+  table.innerHTML = list.map(order => `
+
+    <tr>
+
+      <td>
+        <strong>#${order.id}</strong>
+      </td>
+
+      <td>
+        ${order.customer}
+      </td>
+
+      <td>
+        ${order.product}
+      </td>
+
+      <td>
+        ${order.type === "buy"
+          ? "🛒 Buy"
+          : "🚗 Rent"}
+      </td>
+
+      <td>
+        ${order.date}
+      </td>
+
+      <td>
+        <strong>
+          ৳${order.amount.toLocaleString()}
+        </strong>
+      </td>
+
+      <td>
+
+        <span
+          class="status ${
+            order.status.toLowerCase()
+          }"
+        >
+          ${order.status}
+        </span>
+
+      </td>
+
+    </tr>
+
+  `).join("");
+
+
+  updateOrderSummary();
+
+}
+
+
+function updateOrderSummary(){
+
+  const total =
+    orders.length;
+
+
+  const buys =
+    orders.filter(
+      order => order.type === "buy"
+    ).length;
+
+
+  const rents =
+    orders.filter(
+      order => order.type === "rent"
+    ).length;
+
+
+  const customers =
+    new Set(
+      orders.map(
+        order => order.customer
+      )
+    ).size;
+
+
+  const revenue =
+    orders.reduce(
+      (sum, order) =>
+        sum + order.amount,
+      0
+    );
+
+
+  document.getElementById("totalOrders")
+    .textContent = total;
+
+
+  document.getElementById("buyOrders")
+    .textContent = buys;
+
+
+  document.getElementById("rentOrders")
+    .textContent = rents;
+
+
+  document.getElementById("totalCustomers")
+    .textContent = customers;
+
+
+  document.getElementById("totalRevenue")
+    .textContent =
+      "৳" + revenue.toLocaleString();
+
+}
+
+
+/* Initial render */
+
+renderOrders();
+
+</script>
+
+</body>
+</html>
